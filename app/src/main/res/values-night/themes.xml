@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base Application Theme for Night Mode -->
+    <style name="Theme.CateringApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">#E67E22</item>
+        <item name="colorPrimaryVariant">#D35400</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">#2C3E50</item>
+        <item name="colorSecondaryVariant">#1A252F</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">#121212</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">#E67E22</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+</resources>

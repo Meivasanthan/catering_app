@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base Application Theme -->
+    <style name="Theme.CateringApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">#E67E22</item>
+        <item name="colorPrimaryVariant">#D35400</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">#2C3E50</item>
+        <item name="colorSecondaryVariant">#1A252F</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">@android:color/white</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">#E67E22</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Font (optional - remove if no Poppins) -->
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <!-- Splash Screen Theme -->
+    <style name="Theme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/orange</item>
+        <item name="android:statusBarColor">@color/orange</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+</resources>

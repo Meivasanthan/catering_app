@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- Header with Stats -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@drawable/header_gradient_bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="♥ Favorites"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvFavoriteCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 items"
+                android:textSize="12sp"
+                android:textColor="#FFD4B5"
+                android:background="#FFFFFF"
+                android:backgroundTint="#4DFFFFFF"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your curated collection"
+            android:textSize="13sp"
+            android:textColor="#FFD4B5"
+            android:layout_marginTop="6dp" />
+
+    </LinearLayout>
+
+    <!-- Category Filter Chips -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:id="@+id/chipAll"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="All"
+                android:textSize="13sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/button_filled"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipItalian"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Italian"
+                android:textSize="13sp"
+                android:textColor="#2C3E50"
+                android:background="@drawable/chip_unselected"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipBiryani"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Biryani"
+                android:textSize="13sp"
+                android:textColor="#2C3E50"
+                android:background="@drawable/chip_unselected"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipChinese"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Chinese"
+                android:textSize="13sp"
+                android:textColor="#2C3E50"
+                android:background="@drawable/chip_unselected"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipContinental"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Continental"
+                android:textSize="13sp"
+                android:textColor="#2C3E50"
+                android:background="@drawable/chip_unselected"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Favorites List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp"
+        android:clipToPadding="false" />
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/emptyState"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="40dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="♥"
+            android:textSize="80sp"
+            android:textColor="#E0E0E0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Favorites Yet"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save your favorite caterers here"
+            android:textSize="13sp"
+            android:textColor="#6C757D"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnExplore"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:text="Explore Caterers"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#E67E22"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
