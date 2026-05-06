@@ -15,17 +15,18 @@
 
         <!-- App Logo/Icon -->
         <ImageView
+            android:id="@+id/ivLogo"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/logo"
-            android:layout_marginTop="40dp"
+            android:src="@drawable/logo_spalish"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp" />
 
         <!-- App Name -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Feastly"
+            android:text="Thambikalayan caters"
             android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="#E67E22"
@@ -35,9 +36,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Catering made simple"
-            android:textSize="14sp"
-            android:textColor="#6C757D"
+            android:text=".Best taste."
+            android:textSize="19sp"
+            android:textColor="#7F8C8D"
             android:layout_marginBottom="48dp" />
 
         <!-- Email Input -->
@@ -45,15 +46,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="Email Address"
                 android:inputType="textEmailAddress"
-                android:padding="16dp" />
+                android:padding="16dp"
+                android:autofillHints="email" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +69,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             app:endIconMode="password_toggle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
@@ -71,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:padding="16dp" />
+                android:padding="16dp"
+                android:autofillHints="password" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,7 +95,10 @@
             android:textColor="#E67E22"
             android:textSize="12sp"
             android:layout_marginBottom="32dp"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp" />
 
         <!-- Login Button -->
         <Button
@@ -96,7 +110,8 @@
             android:textStyle="bold"
             android:backgroundTint="#E67E22"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:stateListAnimator="@null" />
 
         <!-- OR Divider -->
         <LinearLayout
@@ -110,7 +125,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="#CED4DA" />
+                android:background="#E0E0E0" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -123,7 +138,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="#CED4DA" />
+                android:background="#E0E0E0" />
 
         </LinearLayout>
 
@@ -143,7 +158,9 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:background="@drawable/social_button_bg"
-                android:layout_marginEnd="16dp">
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -163,7 +180,9 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:background="@drawable/social_button_bg"
-                android:layout_marginEnd="16dp">
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,7 +201,9 @@
                 android:layout_height="60dp"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@drawable/social_button_bg">
+                android:background="@drawable/social_button_bg"
+                android:clickable="true"
+                android:focusable="true">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -205,7 +226,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Don't have an account? "
-                android:textColor="#6C757D" />
+                android:textColor="#6C757D"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tvSignUp"
@@ -213,7 +235,10 @@
                 android:layout_height="wrap_content"
                 android:text="SIGN UP"
                 android:textColor="#E67E22"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
 
         </LinearLayout>
 

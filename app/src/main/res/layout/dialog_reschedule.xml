@@ -90,7 +90,7 @@
             android:layout_weight="1"
             android:text="Cancel"
             android:textSize="13sp"
-            android:textColor="#6C757D"
+            android:textColor="#E41C10"
             android:background="@drawable/button_outline"
             android:layout_marginEnd="10dp" />
 

@@ -25,7 +25,9 @@
                 android:text="← Back"
                 android:textSize="16sp"
                 android:textColor="#E67E22"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
 
         </LinearLayout>
 
@@ -160,7 +162,8 @@
                 android:inputType="textEmailAddress"
                 android:background="@null"
                 android:padding="12dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:autofillHints="email" />
 
         </LinearLayout>
 
@@ -200,7 +203,8 @@
                 android:background="@null"
                 android:padding="12dp"
                 android:textSize="14sp"
-                android:maxLength="10" />
+                android:maxLength="10"
+                android:digits="0123456789" />
 
         </LinearLayout>
 
@@ -314,7 +318,8 @@
             android:textStyle="bold"
             android:backgroundTint="#E67E22"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:stateListAnimator="@null" />
 
         <!-- Login Link -->
         <LinearLayout
@@ -338,7 +343,9 @@
                 android:text="Log In"
                 android:textColor="#E67E22"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
 
         </LinearLayout>
 

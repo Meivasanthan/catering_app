@@ -10,11 +10,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FFFFFF"
+        android:background="#E67E22"
         android:elevation="4dp"
-        app:titleTextColor="#2C3E50"
-        app:title="Feastly" />
-
+        app:titleTextColor="#FFFFFF"
+        app:title="Thambikalayan caters" />
     <!-- Fragment Container -->
     <FrameLayout
         android:id="@+id/frameContainer"
@@ -22,7 +21,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- Bottom Navigation - Simplified -->
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

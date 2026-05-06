@@ -7,4 +7,9 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+    <!-- ADD THIS - Circle Image Shape Appearance -->
+    <style name="ShapeAppearance.CircleImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

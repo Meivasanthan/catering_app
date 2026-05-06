@@ -3,6 +3,7 @@ package com.example.catering_app;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,6 +27,19 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Check if already logged in
+        SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+
+        if (isLoggedIn) {
+            // User already logged in, go to MainActivity
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
         initViews();
         setupClickListeners();
@@ -55,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Forgot password
         tvForgotPassword.setOnClickListener(v -> {
-            Toast.makeText(LoginActivity.this, "Forgot Password? Contact support", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "Please contact support to reset your password", Toast.LENGTH_LONG).show();
         });
 
         // Sign up link
@@ -71,19 +85,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs(String email, String password) {
-        if (email.isEmpty()) {
+        if (TextUtils.isEmpty(email)) {
             etEmail.setError("Email is required");
             etEmail.requestFocus();
             return false;
         }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Enter valid email");
+            etEmail.setError("Enter valid email (e.g., name@example.com)");
             etEmail.requestFocus();
             return false;
         }
 
-        if (password.isEmpty()) {
+        if (TextUtils.isEmpty(password)) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
             return false;
@@ -96,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
         String usersJson = prefs.getString("users_list", "");
 
-        if (usersJson.isEmpty()) {
+        if (TextUtils.isEmpty(usersJson)) {
             Toast.makeText(this, "No account found! Please sign up first.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -107,31 +121,47 @@ public class LoginActivity extends AppCompatActivity {
 
         UserData loggedInUser = null;
         for (UserData user : usersList) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+            if (user.getEmail() != null && user.getEmail().equals(email)
+                    && user.getPassword() != null && user.getPassword().equals(password)) {
                 loggedInUser = user;
                 break;
             }
         }
 
         if (loggedInUser != null) {
-            // Save current logged in user
+            // Save current logged in user session
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("is_logged_in", true);
-            editor.putString("user_email", email);
-            editor.putString("user_name", loggedInUser.getFullName());
-            editor.putString("user_phone", loggedInUser.getPhone());
-            editor.putString("user_role", loggedInUser.getRole());
+            editor.putString("current_user_email", email);
+            editor.putString("current_user_name", loggedInUser.getFullName());
+            editor.putString("current_user_phone", loggedInUser.getPhone());
+            editor.putString("current_user_role", loggedInUser.getRole());
             editor.apply();
 
-            Toast.makeText(this, "Welcome " + loggedInUser.getFullName() + "!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Welcome back, " + loggedInUser.getFullName() + "!", Toast.LENGTH_LONG).show();
 
-            // Go to Home
+            // Go to MainActivity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Invalid email or password!", Toast.LENGTH_LONG).show();
+            // Check if email exists but password is wrong
+            boolean emailExists = false;
+            for (UserData user : usersList) {
+                if (user.getEmail() != null && user.getEmail().equals(email)) {
+                    emailExists = true;
+                    break;
+                }
+            }
+
+            if (emailExists) {
+                Toast.makeText(this, "Incorrect password! Please try again.", Toast.LENGTH_LONG).show();
+                etPassword.setError("Wrong password");
+                etPassword.requestFocus();
+            } else {
+                Toast.makeText(this, "Email not registered! Please sign up first.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

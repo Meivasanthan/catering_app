@@ -17,7 +17,7 @@ import com.example.catering_app.models.UserData;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private TextView tvBack;  // Changed from ImageView to TextView
+    private TextView tvBack;
     private EditText etFullName, etEmail, etPhone, etPassword, etConfirmPassword;
     private RadioGroup rgRole;
     private RadioButton rbCustomer, rbCaterer;
@@ -38,7 +38,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        tvBack = findViewById(R.id.tvBack);  // Fixed: changed from ivBack to tvBack
+        tvBack = findViewById(R.id.tvBack);
         etFullName = findViewById(R.id.etFullName);
         etEmail = findViewById(R.id.etEmail);
         etPhone = findViewById(R.id.etPhone);
@@ -51,6 +51,9 @@ public class SignupActivity extends AppCompatActivity {
         tvLogin = findViewById(R.id.tvLogin);
         tvShowPassword = findViewById(R.id.tvShowPassword);
         tvShowConfirmPassword = findViewById(R.id.tvShowConfirmPassword);
+
+        // Set default selection
+        rbCustomer.setChecked(true);
     }
 
     private void setupClickListeners() {
@@ -66,7 +69,7 @@ public class SignupActivity extends AppCompatActivity {
             String confirmPassword = etConfirmPassword.getText().toString().trim();
 
             int selectedRoleId = rgRole.getCheckedRadioButtonId();
-            String role = (selectedRoleId == R.id.rbCustomer) ? "customer" : "caterer";
+            String role = (selectedRoleId == R.id.rbCustomer) ? "Customer" : "Caterer";
 
             if (validateInputs(fullName, email, phone, password, confirmPassword)) {
                 if (isEmailAlreadyExists(email)) {
@@ -131,6 +134,12 @@ public class SignupActivity extends AppCompatActivity {
             return false;
         }
 
+        if (fullName.length() < 3) {
+            etFullName.setError("Full name must be at least 3 characters");
+            etFullName.requestFocus();
+            return false;
+        }
+
         // Email validation
         if (email.isEmpty()) {
             etEmail.setError("Email is required");
@@ -176,6 +185,12 @@ public class SignupActivity extends AppCompatActivity {
             return false;
         }
 
+        if (password.length() > 20) {
+            etPassword.setError("Password must be less than 20 characters");
+            etPassword.requestFocus();
+            return false;
+        }
+
         // Check if password contains both letter and number
         boolean hasLetter = false;
         boolean hasDigit = false;
@@ -191,6 +206,12 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         // Confirm password validation
+        if (confirmPassword.isEmpty()) {
+            etConfirmPassword.setError("Please confirm your password");
+            etConfirmPassword.requestFocus();
+            return false;
+        }
+
         if (!password.equals(confirmPassword)) {
             etConfirmPassword.setError("Passwords do not match");
             etConfirmPassword.requestFocus();
@@ -213,7 +234,7 @@ public class SignupActivity extends AppCompatActivity {
         ArrayList<UserData> usersList = gson.fromJson(usersJson, type);
 
         for (UserData user : usersList) {
-            if (user.getEmail().equals(email)) {
+            if (user.getEmail() != null && user.getEmail().equals(email)) {
                 return true;
             }
         }
@@ -234,8 +255,35 @@ public class SignupActivity extends AppCompatActivity {
             usersList = gson.fromJson(usersJson, type);
         }
 
-        usersList.add(new UserData(fullName, email, phone, password, role));
+        // Create new user
+        UserData newUser = new UserData(fullName, email, phone, password, role);
+        usersList.add(newUser);
+
         String newUsersJson = gson.toJson(usersList);
-        prefs.edit().putString("users_list", newUsersJson).apply();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("users_list", newUsersJson);
+        editor.apply();
+
+        // Also save current user for session
+        SharedPreferences sessionPrefs = getSharedPreferences("CURRENT_USER", MODE_PRIVATE);
+        sessionPrefs.edit()
+                .putString("email", email)
+                .putString("name", fullName)
+                .putString("role", role)
+                .apply();
+    }
+
+    // Helper method to get all users (for debugging)
+    public List<UserData> getAllUsers() {
+        SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+        String usersJson = prefs.getString("users_list", "");
+
+        if (usersJson.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<UserData>>() {}.getType();
+        return gson.fromJson(usersJson, type);
     }
 }

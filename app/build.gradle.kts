@@ -31,7 +31,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    // ADD THIS for ViewBinding
+    // ViewBinding
     buildFeatures {
         viewBinding = true
     }
@@ -64,8 +64,9 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.okhttp.logging)
 
-    // Glide
+    // Glide with annotation processor
     implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)  // ← ADD THIS (MISSING)
 
     // Room
     implementation(libs.room.runtime)
@@ -75,12 +76,9 @@ dependencies {
     // Preferences
     implementation(libs.preference.ktx)
 
-    // Circle ImageView
+    // Circle ImageView (keep only ONE, remove duplicate)
     implementation(libs.circleimageview)
 
     // Gson for JSON parsing
     implementation("com.google.code.gson:gson:2.10.1")
-
-    // Circle ImageView
-    implementation("de.hdodenhof:circleimageview:3.1.0")
 }
