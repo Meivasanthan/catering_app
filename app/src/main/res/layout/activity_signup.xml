@@ -12,24 +12,18 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Back Button with arrow icon -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Back Button -->
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp">
-
-            <TextView
-                android:id="@+id/tvBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="← Back"
-                android:textSize="16sp"
-                android:textColor="#E67E22"
-                android:textStyle="bold"
-                android:clickable="true"
-                android:focusable="true" />
-
-        </LinearLayout>
+            android:text="← Back"
+            android:textSize="16sp"
+            android:textColor="#E67E22"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="24dp" />
 
         <!-- Main Title -->
         <TextView
@@ -50,43 +44,47 @@
             android:textColor="#7F8C8D"
             android:layout_marginBottom="32dp" />
 
-        <!-- Role Selection - Customer / Caterer -->
-        <LinearLayout
+        <!-- ========== ROLE SELECTION ========== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I am a:"
+            android:textSize="14sp"
+            android:textColor="#2C3E50"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <RadioGroup
+            android:id="@+id/rgRole"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="24dp">
 
-            <RadioGroup
-                android:id="@+id/rgRole"
-                android:layout_width="match_parent"
+            <RadioButton
+                android:id="@+id/rbCustomer"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:text="Customer"
+                android:textSize="16sp"
+                android:textColor="#2C3E50"
+                android:buttonTint="#E67E22"
+                android:checked="true" />
 
-                <RadioButton
-                    android:id="@+id/rbCustomer"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Customer"
-                    android:textSize="16sp"
-                    android:textColor="#2C3E50"
-                    android:buttonTint="#E67E22"
-                    android:checked="true" />
+            <RadioButton
+                android:id="@+id/rbCaterer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Owner / Caterer"
+                android:textSize="16sp"
+                android:textColor="#2C3E50"
+                android:buttonTint="#E67E22" />
 
-                <RadioButton
-                    android:id="@+id/rbCaterer"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Caterer"
-                    android:textSize="16sp"
-                    android:textColor="#2C3E50"
-                    android:buttonTint="#E67E22" />
+        </RadioGroup>
 
-            </RadioGroup>
-
-        </LinearLayout>
+        <!-- ========== COMMON FIELDS (Both Roles) ========== -->
 
         <!-- Full Name Field -->
         <TextView
@@ -127,7 +125,7 @@
 
         </LinearLayout>
 
-        <!-- Email Address Field -->
+        <!-- Email Field -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -162,12 +160,11 @@
                 android:inputType="textEmailAddress"
                 android:background="@null"
                 android:padding="12dp"
-                android:textSize="14sp"
-                android:autofillHints="email" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
-        <!-- Phone Number Field -->
+        <!-- Phone Field -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -208,7 +205,7 @@
 
         </LinearLayout>
 
-        <!-- Password Field with Show/Hide -->
+        <!-- Password Field -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -258,7 +255,7 @@
 
         </LinearLayout>
 
-        <!-- Confirm Password Field with Show/Hide -->
+        <!-- Confirm Password Field -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -274,7 +271,7 @@
             android:orientation="horizontal"
             android:background="@drawable/edittext_bg"
             android:gravity="center_vertical"
-            android:layout_marginBottom="32dp">
+            android:layout_marginBottom="24dp">
 
             <TextView
                 android:layout_width="40dp"
@@ -308,6 +305,182 @@
 
         </LinearLayout>
 
+        <!-- ========== OWNER/CATERER EXTRA FIELDS (Conditional) ========== -->
+        <LinearLayout
+            android:id="@+id/ownerExtraFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business Details"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#2C3E50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Business Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business Name"
+                android:textSize="14sp"
+                android:textColor="#2C3E50"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/edittext_bg"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="🏪"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_marginStart="12dp" />
+
+                <EditText
+                    android:id="@+id/etBusinessName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Enter business name"
+                    android:inputType="textPersonName"
+                    android:background="@null"
+                    android:padding="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <!-- GST Number -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GST Number (Optional)"
+                android:textSize="14sp"
+                android:textColor="#2C3E50"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/edittext_bg"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="📋"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_marginStart="12dp" />
+
+                <EditText
+                    android:id="@+id/etGstNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="22AAAAA0000A1Z"
+                    android:inputType="text"
+                    android:background="@null"
+                    android:padding="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <!-- Business Address -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business Address"
+                android:textSize="14sp"
+                android:textColor="#2C3E50"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/edittext_bg"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="📍"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_marginStart="12dp" />
+
+                <EditText
+                    android:id="@+id/etBusinessAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Enter business address"
+                    android:inputType="textPostalAddress"
+                    android:background="@null"
+                    android:padding="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <!-- Cuisine Type -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cuisine Type"
+                android:textSize="14sp"
+                android:textColor="#2C3E50"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/edittext_bg"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="🍽️"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_marginStart="12dp" />
+
+                <EditText
+                    android:id="@+id/etCuisineType"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Indian, Italian, Chinese"
+                    android:inputType="text"
+                    android:background="@null"
+                    android:padding="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
         <!-- Create Account Button -->
         <Button
             android:id="@+id/btnCreateAccount"
@@ -318,8 +491,8 @@
             android:textStyle="bold"
             android:backgroundTint="#E67E22"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="24dp"
-            android:stateListAnimator="@null" />
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp" />
 
         <!-- Login Link -->
         <LinearLayout

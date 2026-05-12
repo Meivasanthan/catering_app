@@ -20,6 +20,7 @@
         android:theme="@style/Theme.CateringApp"
         android:usesCleartextTraffic="true">
 
+        <!-- Splash Activity (Launcher) -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -30,20 +31,58 @@
             </intent-filter>
         </activity>
 
+        <!-- Onboarding Activity -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="false" />
 
+        <!-- Login Activity -->
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
+        <!-- Signup Activity -->
         <activity
             android:name=".SignupActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Customer Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- ========== OWNER/CATERER ACTIVITIES ========== -->
+
+        <!-- Owner Dashboard Activity -->
+        <activity
+            android:name=".CatererDashboardActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Owner Menu Management Activity -->
+        <activity
+            android:name=".MenuManagementActivity"
+            android:exported="false" />
+
+        <!-- Owner Orders Management Activity -->
+        <activity
+            android:name=".OwnerOrdersActivity"
+            android:exported="false" />
+
+        <!-- Owner Profile Activity -->
+        <activity
+            android:name=".CatererProfileActivity"
+            android:exported="false" />
+
+        <!-- Add Food Activity -->
+        <activity
+            android:name=".AddFoodActivity"
             android:exported="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".OrderDetailActivity"
             android:exported="false" />
 
     </application>

@@ -21,4 +21,56 @@
 
     <color name="bottom_nav_active">#E67E22</color>
     <color name="bottom_nav_inactive">#9E9E9E</color>
+
+    <color name="popular_bg">#FFF3E0</color>
+    <color name="popular_text">#E67E22</color>
+    <color name="bestseller_bg">#E8F5E9</color>
+    <color name="bestseller_text">#27AE60</color>
+
+
+    <!-- Order Status Colors -->
+    <color name="status_new_bg">#FFF3E0</color>
+    <color name="status_new_text">#E67E22</color>
+    <color name="status_preparing_bg">#FFF3E0</color>
+    <color name="status_preparing_text">#F39C12</color>
+    <color name="status_out_bg">#E3F2FD</color>
+    <color name="status_out_text">#3498DB</color>
+    <color name="status_completed_bg">#E8F5E9</color>
+    <color name="status_completed_text">#27AE60</color>
+    <color name="status_cancelled_bg">#FFEBEE</color>
+    <color name="status_cancelled_text">#E74C3C</color>
+
+
+    <color name="info">#3498DB</color>
+
+    <color name="timeline_inactive">#E0E0E0</color>
+    <color name="timeline_active">#E67E22</color>
+    <color name="timeline_completed">#27AE60</color>
+
+
+
+
+
+    <!-- App Colors -->
+    <color name="primary">#E67E22</color>
+    <color name="primary_dark">#D35400</color>
+    <color name="secondary">#2C3E50</color>
+    <color name="success">#27AE60</color>
+    <color name="warning">#E74C3C</color>
+    <color name="text_dark">#2D3436</color>
+    <color name="text_gray">#7F8C8D</color>
+    <color name="text_light">#FFFFFF</color>
+    <color name="background">#F8F9FA</color>
+    <color name="primary_light">#F39C12</color>
+
+    <!-- Status Chip Colors -->
+    <color name="status_confirmed_bg">#E8F5E9</color>
+    <color name="status_confirmed_text">#27AE60</color>
+
+    <color name="status_delivered_bg">#E8F5E9</color>
+    <color name="status_delivered_text">#27AE60</color>
+
+
+
+
 </resources>

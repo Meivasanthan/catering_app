@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F9FA">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#E67E22"
+        android:elevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_back"
+                android:padding="12dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Details"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Order Header Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvOrderId"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="#ORD-1028"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#2C3E50" />
+
+                        <TextView
+                            android:id="@+id/tvOrderDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10:30 AM"
+                            android:textSize="12sp"
+                            android:textColor="#95A5A6" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvOrderStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✅ Confirmed"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:padding="6dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:layout_marginTop="8dp"
+                        app:cornerRadius="16dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- MAP STYLE STATUS TIMELINE -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📍 Order Tracker"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50"
+                        android:layout_marginBottom="20dp" />
+
+                    <!-- Progress Bar Background -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp">
+
+                        <!-- Line Background -->
+                        <View
+                            android:id="@+id/lineBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:layout_centerVertical="true"
+                            android:background="#E0E0E0" />
+
+                        <!-- Line Progress -->
+                        <View
+                            android:id="@+id/lineProgress"
+                            android:layout_width="0dp"
+                            android:layout_height="4dp"
+                            android:layout_centerVertical="true"
+                            android:background="#E67E22" />
+
+                        <!-- Steps Container -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
+
+                            <!-- Step 1: Confirmed -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <FrameLayout
+                                    android:id="@+id/step1Circle"
+                                    android:layout_width="44dp"
+                                    android:layout_height="44dp"
+                                    android:background="@drawable/step_circle_bg">
+
+                                    <TextView
+                                        android:id="@+id/step1Icon"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="✅"
+                                        android:textSize="20sp"
+                                        android:layout_gravity="center" />
+
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/step1Text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Confirmed"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="8dp" />
+
+                                <TextView
+                                    android:id="@+id/step1Time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10:30 AM"
+                                    android:textSize="9sp"
+                                    android:textColor="#95A5A6" />
+
+                            </LinearLayout>
+
+                            <!-- Step 2: Preparing -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <FrameLayout
+                                    android:id="@+id/step2Circle"
+                                    android:layout_width="44dp"
+                                    android:layout_height="44dp"
+                                    android:background="@drawable/step_circle_bg">
+
+                                    <TextView
+                                        android:id="@+id/step2Icon"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="⏳"
+                                        android:textSize="20sp"
+                                        android:layout_gravity="center" />
+
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/step2Text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Preparing"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="8dp" />
+
+                                <TextView
+                                    android:id="@+id/step2Time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="11:00 AM"
+                                    android:textSize="9sp"
+                                    android:textColor="#95A5A6" />
+
+                            </LinearLayout>
+
+                            <!-- Step 3: Out for Delivery -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <FrameLayout
+                                    android:id="@+id/step3Circle"
+                                    android:layout_width="44dp"
+                                    android:layout_height="44dp"
+                                    android:background="@drawable/step_circle_bg">
+
+                                    <TextView
+                                        android:id="@+id/step3Icon"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="🚚"
+                                        android:textSize="20sp"
+                                        android:layout_gravity="center" />
+
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/step3Text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Out for Delivery"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="8dp" />
+
+                                <TextView
+                                    android:id="@+id/step3Time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="12:00 PM"
+                                    android:textSize="9sp"
+                                    android:textColor="#95A5A6" />
+
+                            </LinearLayout>
+
+                            <!-- Step 4: Delivered -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <FrameLayout
+                                    android:id="@+id/step4Circle"
+                                    android:layout_width="44dp"
+                                    android:layout_height="44dp"
+                                    android:background="@drawable/step_circle_bg">
+
+                                    <TextView
+                                        android:id="@+id/step4Icon"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="🎉"
+                                        android:textSize="20sp"
+                                        android:layout_gravity="center" />
+
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/step4Text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Delivered"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="8dp" />
+
+                                <TextView
+                                    android:id="@+id/step4Time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="01:00 PM"
+                                    android:textSize="9sp"
+                                    android:textColor="#95A5A6" />
+
+                            </LinearLayout>
+
+                            <!-- Step 5: Cancelled -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <FrameLayout
+                                    android:id="@+id/step5Circle"
+                                    android:layout_width="44dp"
+                                    android:layout_height="44dp"
+                                    android:background="@drawable/step_circle_bg_cancelled">
+
+                                    <TextView
+                                        android:id="@+id/step5Icon"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="❌"
+                                        android:textSize="20sp"
+                                        android:layout_gravity="center" />
+
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/step5Text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Cancelled"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="8dp" />
+
+                                <TextView
+                                    android:id="@+id/step5Time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="9sp"
+                                    android:textColor="#95A5A6" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <!-- Status Update Chips -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Update Status"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="12dp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipConfirmed"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✅ Confirmed"
+                            android:textSize="11sp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipPreparing"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="⏳ Preparing"
+                            android:textSize="11sp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipOutForDelivery"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🚚 Out for Delivery"
+                            android:textSize="11sp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipDelivered"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🎉 Delivered"
+                            android:textSize="11sp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipCancelled"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="❌ Cancelled"
+                            android:textSize="11sp" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Customer Details Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Customer Details"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:id="@+id/tvCustomerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Priya Sharma"
+                        android:textSize="14sp"
+                        android:textColor="#2C3E50" />
+
+                    <TextView
+                        android:id="@+id/tvCustomerPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+91 98765 43210"
+                        android:textSize="13sp"
+                        android:textColor="#7F8C8D"
+                        android:layout_marginTop="4dp" />
+
+                    <TextView
+                        android:id="@+id/tvCustomerEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="priya@email.com"
+                        android:textSize="13sp"
+                        android:textColor="#7F8C8D"
+                        android:layout_marginTop="4dp" />
+
+                    <TextView
+                        android:id="@+id/tvDeliveryAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123 Main Street, New York"
+                        android:textSize="13sp"
+                        android:textColor="#7F8C8D"
+                        android:layout_marginTop="4dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Order Items Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order Items"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:id="@+id/tvOrderItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2x Butter Chicken\n1x Garlic Naan\n1x Biryani"
+                        android:textSize="13sp"
+                        android:textColor="#2C3E50"
+                        android:lineSpacingExtra="4dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Order Summary Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order Summary"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50"
+                        android:layout_marginBottom="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Subtotal"
+                            android:textSize="13sp"
+                            android:textColor="#7F8C8D" />
+
+                        <TextView
+                            android:id="@+id/tvSubtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹1,000"
+                            android:textSize="13sp"
+                            android:textColor="#2C3E50" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Delivery Fee"
+                            android:textSize="13sp"
+                            android:textColor="#7F8C8D" />
+
+                        <TextView
+                            android:id="@+id/tvDeliveryFee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹100"
+                            android:textSize="13sp"
+                            android:textColor="#2C3E50" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Packing Charge"
+                            android:textSize="13sp"
+                            android:textColor="#7F8C8D" />
+
+                        <TextView
+                            android:id="@+id/tvPackingCharge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹50"
+                            android:textSize="13sp"
+                            android:textColor="#2C3E50" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Tax (GST 5%)"
+                            android:textSize="13sp"
+                            android:textColor="#7F8C8D" />
+
+                        <TextView
+                            android:id="@+id/tvTax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹50"
+                            android:textSize="13sp"
+                            android:textColor="#2C3E50" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0"
+                        android:layout_marginVertical="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="TOTAL"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#2C3E50" />
+
+                        <TextView
+                            android:id="@+id/tvTotalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹1,200"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#E67E22" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Cancel Warning Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardCancelWarning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:background="#FFF3E0"
+                android:layout_marginBottom="16dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⚠️"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" Cancelling order will refund the amount to customer"
+                        android:textSize="11sp"
+                        android:textColor="#E67E22"
+                        android:layout_marginStart="8dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCallCustomer"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="📞 CALL"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="#2C3E50"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCancelOrder"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="❌ CANCEL"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="#E74C3C"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+            <!-- Update Status Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUpdateStatus"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="UPDATE STATUS"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#E67E22"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="12dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

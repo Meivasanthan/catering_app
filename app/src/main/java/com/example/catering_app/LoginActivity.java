@@ -33,12 +33,24 @@ public class LoginActivity extends AppCompatActivity {
         boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
 
         if (isLoggedIn) {
-            // User already logged in, go to MainActivity
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-            return;
+            // Get the saved role
+            String userRole = prefs.getString("current_user_role", "Customer");
+
+            if (userRole != null && userRole.equals("Caterer")) {
+                // Owner was logged in - go to Owner Dashboard
+                Intent intent = new Intent(LoginActivity.this, CatererDashboardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+                return;
+            } else {
+                // Customer was logged in - go to Customer Home
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+                return;
+            }
         }
 
         initViews();
@@ -140,11 +152,24 @@ public class LoginActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Welcome back, " + loggedInUser.getFullName() + "!", Toast.LENGTH_LONG).show();
 
-            // Go to MainActivity
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            // ========== ROLE BASED REDIRECTION ==========
+            String userRole = loggedInUser.getRole();
+
+            if (userRole != null && userRole.equals("Caterer")) {
+                // OWNER - Go to Caterer Dashboard
+                Intent intent = new Intent(LoginActivity.this, CatererDashboardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            } else {
+                // CUSTOMER - Go to Customer Home (MainActivity)
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+            // ===========================================
+
         } else {
             // Check if email exists but password is wrong
             boolean emailExists = false;

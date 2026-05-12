@@ -19,10 +19,12 @@ public class SignupActivity extends AppCompatActivity {
 
     private TextView tvBack;
     private EditText etFullName, etEmail, etPhone, etPassword, etConfirmPassword;
+    private EditText etBusinessName, etGstNumber, etBusinessAddress, etCuisineType;
     private RadioGroup rgRole;
     private RadioButton rbCustomer, rbCaterer;
     private Button btnCreateAccount;
     private TextView tvLogin, tvShowPassword, tvShowConfirmPassword;
+    private LinearLayout ownerExtraFields;
 
     private boolean isPasswordVisible = false;
     private boolean isConfirmPasswordVisible = false;
@@ -35,6 +37,7 @@ public class SignupActivity extends AppCompatActivity {
         initViews();
         setupClickListeners();
         setupPasswordToggle();
+        setupRoleBasedFields();
     }
 
     private void initViews() {
@@ -51,16 +54,34 @@ public class SignupActivity extends AppCompatActivity {
         tvLogin = findViewById(R.id.tvLogin);
         tvShowPassword = findViewById(R.id.tvShowPassword);
         tvShowConfirmPassword = findViewById(R.id.tvShowConfirmPassword);
+        ownerExtraFields = findViewById(R.id.ownerExtraFields);
+
+        // Owner extra fields
+        etBusinessName = findViewById(R.id.etBusinessName);
+        etGstNumber = findViewById(R.id.etGstNumber);
+        etBusinessAddress = findViewById(R.id.etBusinessAddress);
+        etCuisineType = findViewById(R.id.etCuisineType);
 
         // Set default selection
         rbCustomer.setChecked(true);
+        ownerExtraFields.setVisibility(View.GONE);
+    }
+
+    private void setupRoleBasedFields() {
+        rgRole.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbCaterer) {
+                // Show owner extra fields
+                ownerExtraFields.setVisibility(View.VISIBLE);
+            } else {
+                // Hide owner extra fields
+                ownerExtraFields.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void setupClickListeners() {
-        // Back button
         tvBack.setOnClickListener(v -> finish());
 
-        // Create Account button
         btnCreateAccount.setOnClickListener(v -> {
             String fullName = etFullName.getText().toString().trim();
             String email = etEmail.getText().toString().trim();
@@ -71,14 +92,34 @@ public class SignupActivity extends AppCompatActivity {
             int selectedRoleId = rgRole.getCheckedRadioButtonId();
             String role = (selectedRoleId == R.id.rbCustomer) ? "Customer" : "Caterer";
 
+            // Get owner extra fields if role is Caterer
+            String businessName = "", gstNumber = "", businessAddress = "", cuisineType = "";
+            if (role.equals("Caterer")) {
+                businessName = etBusinessName.getText().toString().trim();
+                gstNumber = etGstNumber.getText().toString().trim();
+                businessAddress = etBusinessAddress.getText().toString().trim();
+                cuisineType = etCuisineType.getText().toString().trim();
+
+                // Validate owner fields
+                if (businessName.isEmpty()) {
+                    etBusinessName.setError("Business name is required");
+                    etBusinessName.requestFocus();
+                    return;
+                }
+                if (businessAddress.isEmpty()) {
+                    etBusinessAddress.setError("Business address is required");
+                    etBusinessAddress.requestFocus();
+                    return;
+                }
+            }
+
             if (validateInputs(fullName, email, phone, password, confirmPassword)) {
                 if (isEmailAlreadyExists(email)) {
                     Toast.makeText(this, "Email already registered! Please login.", Toast.LENGTH_LONG).show();
                 } else {
-                    saveUserData(fullName, email, phone, password, role);
+                    saveUserData(fullName, email, phone, password, role, businessName, gstNumber, businessAddress, cuisineType);
                     Toast.makeText(this, "Account created successfully! Please login.", Toast.LENGTH_LONG).show();
 
-                    // Go to Login page
                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
@@ -87,7 +128,6 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        // Login link
         tvLogin.setOnClickListener(v -> {
             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -95,7 +135,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void setupPasswordToggle() {
-        // Toggle password visibility
         tvShowPassword.setOnClickListener(v -> {
             if (isPasswordVisible) {
                 etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -109,7 +148,6 @@ public class SignupActivity extends AppCompatActivity {
             etPassword.setSelection(etPassword.length());
         });
 
-        // Toggle confirm password visibility
         tvShowConfirmPassword.setOnClickListener(v -> {
             if (isConfirmPasswordVisible) {
                 etConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -126,14 +164,12 @@ public class SignupActivity extends AppCompatActivity {
 
     private boolean validateInputs(String fullName, String email, String phone,
                                    String password, String confirmPassword) {
-
         // Full Name validation
         if (fullName.isEmpty()) {
             etFullName.setError("Full name is required");
             etFullName.requestFocus();
             return false;
         }
-
         if (fullName.length() < 3) {
             etFullName.setError("Full name must be at least 3 characters");
             etFullName.requestFocus();
@@ -146,26 +182,23 @@ public class SignupActivity extends AppCompatActivity {
             etEmail.requestFocus();
             return false;
         }
-
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Enter valid email (e.g., name@example.com)");
             etEmail.requestFocus();
             return false;
         }
 
-        // Phone validation - exactly 10 digits
+        // Phone validation
         if (phone.isEmpty()) {
             etPhone.setError("Phone number is required");
             etPhone.requestFocus();
             return false;
         }
-
         if (phone.length() != 10) {
             etPhone.setError("Phone number must be exactly 10 digits");
             etPhone.requestFocus();
             return false;
         }
-
         if (!TextUtils.isDigitsOnly(phone)) {
             etPhone.setError("Phone number must contain only digits");
             etPhone.requestFocus();
@@ -178,40 +211,34 @@ public class SignupActivity extends AppCompatActivity {
             etPassword.requestFocus();
             return false;
         }
-
         if (password.length() < 6) {
             etPassword.setError("Password must be at least 6 characters");
             etPassword.requestFocus();
             return false;
         }
-
         if (password.length() > 20) {
             etPassword.setError("Password must be less than 20 characters");
             etPassword.requestFocus();
             return false;
         }
 
-        // Check if password contains both letter and number
         boolean hasLetter = false;
         boolean hasDigit = false;
         for (char c : password.toCharArray()) {
             if (Character.isLetter(c)) hasLetter = true;
             if (Character.isDigit(c)) hasDigit = true;
         }
-
         if (!hasLetter || !hasDigit) {
             etPassword.setError("Password must contain both letters and numbers");
             etPassword.requestFocus();
             return false;
         }
 
-        // Confirm password validation
         if (confirmPassword.isEmpty()) {
             etConfirmPassword.setError("Please confirm your password");
             etConfirmPassword.requestFocus();
             return false;
         }
-
         if (!password.equals(confirmPassword)) {
             etConfirmPassword.setError("Passwords do not match");
             etConfirmPassword.requestFocus();
@@ -224,10 +251,7 @@ public class SignupActivity extends AppCompatActivity {
     private boolean isEmailAlreadyExists(String email) {
         SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
         String usersJson = prefs.getString("users_list", "");
-
-        if (usersJson.isEmpty()) {
-            return false;
-        }
+        if (usersJson.isEmpty()) return false;
 
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<UserData>>() {}.getType();
@@ -241,7 +265,9 @@ public class SignupActivity extends AppCompatActivity {
         return false;
     }
 
-    private void saveUserData(String fullName, String email, String phone, String password, String role) {
+    private void saveUserData(String fullName, String email, String phone, String password,
+                              String role, String businessName, String gstNumber,
+                              String businessAddress, String cuisineType) {
         SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
         String usersJson = prefs.getString("users_list", "");
 
@@ -255,35 +281,13 @@ public class SignupActivity extends AppCompatActivity {
             usersList = gson.fromJson(usersJson, type);
         }
 
-        // Create new user
-        UserData newUser = new UserData(fullName, email, phone, password, role);
+        UserData newUser = new UserData(fullName, email, phone, password, role,
+                businessName, gstNumber, businessAddress, cuisineType);
         usersList.add(newUser);
 
         String newUsersJson = gson.toJson(usersList);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("users_list", newUsersJson);
         editor.apply();
-
-        // Also save current user for session
-        SharedPreferences sessionPrefs = getSharedPreferences("CURRENT_USER", MODE_PRIVATE);
-        sessionPrefs.edit()
-                .putString("email", email)
-                .putString("name", fullName)
-                .putString("role", role)
-                .apply();
-    }
-
-    // Helper method to get all users (for debugging)
-    public List<UserData> getAllUsers() {
-        SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
-        String usersJson = prefs.getString("users_list", "");
-
-        if (usersJson.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<UserData>>() {}.getType();
-        return gson.fromJson(usersJson, type);
     }
 }

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <!-- Food Image -->
+        <ImageView
+            android:id="@+id/ivFoodImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_food_placeholder"
+            android:background="#F5F5F5"
+            app:cornerRadius="12dp" />
+
+        <!-- Details -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <!-- Row 1: Food Name + Badges -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvFoodName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Gulab Jamun"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#2C3E50" />
+
+                <!-- Badge Container -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Popular Badge (Orange Background) -->
+                    <TextView
+                        android:id="@+id/tvPopular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⭐ Popular"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="#E67E22"
+                        android:background="#FFF3E0"
+                        android:padding="4dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        app:cornerRadius="12dp"
+                        android:layout_marginEnd="4dp"
+                        android:visibility="gone" />
+
+                    <!-- Best Seller Badge (Green Background) -->
+                    <TextView
+                        android:id="@+id/tvBestSeller"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔥 Best Seller"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="#27AE60"
+                        android:background="#E8F5E9"
+                        android:padding="4dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        app:cornerRadius="12dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Row 2: Category & Type -->
+            <TextView
+                android:id="@+id/tvCategoryType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desserts · Veg"
+                android:textSize="12sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="4dp" />
+
+            <!-- Row 3: Orders Count -->
+            <TextView
+                android:id="@+id/tvOrdersCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="67 orders this month"
+                android:textSize="11sp"
+                android:textColor="#95A5A6"
+                android:layout_marginTop="4dp" />
+
+            <!-- Row 4: Availability Status (No Background) -->
+            <TextView
+                android:id="@+id/tvAvailability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🟢 Available"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_marginTop="6dp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <!-- Price & Actions -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹120"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#E67E22" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_edit"
+                    android:padding="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+
+                <ImageView
+                    android:id="@+id/btnDelete"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_delete"
+                    android:padding="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F9FA">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#E67E22"
+        android:elevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_back"
+                android:padding="12dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu Management"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Add Button - TOP -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Menu Items"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddItemTop"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="+ Add Item"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:backgroundTint="#E67E22"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="20dp" />
+
+    </LinearLayout>
+
+    <!-- Filter Chips -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipAll"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All"
+            android:checked="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipVeg"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Veg" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipNonVeg"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Non-Veg" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipPopular"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Popular" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <!-- RecyclerView for Food Items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:clipToPadding="false" />
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/llEmptyState"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🍽️"
+            android:textSize="64sp" />
+
+        <TextView
+            android:id="@+id/tvEmptyMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No food items added yet"
+            android:textSize="16sp"
+            android:textColor="#95A5A6"
+            android:layout_marginTop="16dp"
+            android:gravity="center" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddFromEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:text="+ Add Your First Item"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:backgroundTint="#E67E22"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="24dp"
+            app:cornerRadius="22dp" />
+
+    </LinearLayout>
+
+    <!-- Add Button - BOTTOM -->
+    <LinearLayout
+        android:id="@+id/bottomAddButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddItemBottom"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text=" Add New Item"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:backgroundTint="#E67E22"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textStart" />
+
+    </LinearLayout>
+
+</LinearLayout>
