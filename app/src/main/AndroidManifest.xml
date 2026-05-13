@@ -85,6 +85,11 @@
             android:name=".OrderDetailActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".EarningsActivity"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>

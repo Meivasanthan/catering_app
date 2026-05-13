@@ -318,7 +318,7 @@ public class CatererDashboardActivity extends AppCompatActivity {
         cardOrders.setOnClickListener(v ->
                 navigateToOrders());
         cardSales.setOnClickListener(v ->
-                Toast.makeText(this, "Earnings Details", Toast.LENGTH_SHORT).show());
+                navigateToEarnings());  // Changed to open Earnings page
         cardRating.setOnClickListener(v ->
                 Toast.makeText(this, "Rating Details", Toast.LENGTH_SHORT).show());
 
@@ -338,7 +338,7 @@ public class CatererDashboardActivity extends AppCompatActivity {
 
         // Reports link
         tvReports.setOnClickListener(v ->
-                Toast.makeText(this, "Full Reports", Toast.LENGTH_SHORT).show());
+                navigateToEarnings());  // Changed to open Earnings page
 
         // Quick Actions
         btnAddItem.setOnClickListener(v ->
@@ -364,7 +364,7 @@ public class CatererDashboardActivity extends AppCompatActivity {
 
         btnNavEarnings.setOnClickListener(v -> {
             setActiveNav(3);
-            Toast.makeText(this, "Earnings Report", Toast.LENGTH_SHORT).show();
+            navigateToEarnings();  // Added navigation to Earnings page
         });
 
         btnNavProfile.setOnClickListener(v -> {
@@ -372,6 +372,14 @@ public class CatererDashboardActivity extends AppCompatActivity {
             navigateToProfile();
         });
     }
+
+    // ========== ADD THIS MISSING METHOD ==========
+    private void navigateToEarnings() {
+        Intent intent = new Intent(this, EarningsActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+    // ============================================
 
     private void setActiveNav(int position) {
         // Reset all to gray
