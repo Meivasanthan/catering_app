@@ -58,6 +58,44 @@ public class MenuManagementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_management);
+        // Initialize Bottom Navigation
+        View bottomNav = findViewById(R.id.bottomNavigation);
+
+        LinearLayout btnNavDashboard = bottomNav.findViewById(R.id.btnNavDashboard);
+        LinearLayout btnNavMenu = bottomNav.findViewById(R.id.btnNavMenu);
+        LinearLayout btnNavOrders = bottomNav.findViewById(R.id.btnNavOrders);
+        LinearLayout btnNavEarnings = bottomNav.findViewById(R.id.btnNavEarnings);
+        LinearLayout btnNavProfile = bottomNav.findViewById(R.id.btnNavProfile);
+
+// Set click listeners
+        btnNavDashboard.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CatererDashboardActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        btnNavMenu.setOnClickListener(v -> {
+            // Already on Menu page, do nothing or refresh
+            Toast.makeText(this, "Menu", Toast.LENGTH_SHORT).show();
+        });
+
+        btnNavOrders.setOnClickListener(v -> {
+            Intent intent = new Intent(this, OwnerOrdersActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        btnNavEarnings.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EarningsActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        btnNavProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CatererProfileActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         sharedPreferences = getSharedPreferences("FOOD_DATA", MODE_PRIVATE);
 
@@ -67,6 +105,7 @@ public class MenuManagementActivity extends AppCompatActivity {
         setupFilterChips();
         loadFoodItemsFromStorage();
         setupClickListeners();
+
     }
 
     private void initViews() {
@@ -241,6 +280,7 @@ public class MenuManagementActivity extends AppCompatActivity {
         super.onResume();
         loadFoodItemsFromStorage();
     }
+
 
     // FoodItem Model
     public static class FoodItem {

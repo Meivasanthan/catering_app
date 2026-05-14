@@ -1,5 +1,6 @@
 package com.example.catering_app;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -65,6 +66,44 @@ public class EarningsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earnings);
+
+        // Initialize Bottom Navigation
+        View bottomNav = findViewById(R.id.bottomNavigation);
+
+        LinearLayout btnNavDashboard = bottomNav.findViewById(R.id.btnNavDashboard);
+        LinearLayout btnNavMenu = bottomNav.findViewById(R.id.btnNavMenu);
+        LinearLayout btnNavOrders = bottomNav.findViewById(R.id.btnNavOrders);
+        LinearLayout btnNavEarnings = bottomNav.findViewById(R.id.btnNavEarnings);
+        LinearLayout btnNavProfile = bottomNav.findViewById(R.id.btnNavProfile);
+
+// Set click listeners
+        btnNavDashboard.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CatererDashboardActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        btnNavMenu.setOnClickListener(v -> {
+            Toast.makeText(this, "Menu", Toast.LENGTH_SHORT).show();
+        });
+
+        btnNavOrders.setOnClickListener(v -> {
+            Intent intent = new Intent(this, OwnerOrdersActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        btnNavEarnings.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EarningsActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        btnNavProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CatererProfileActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         sharedPreferences = getSharedPreferences("EARNINGS_DATA", MODE_PRIVATE);
         bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce);

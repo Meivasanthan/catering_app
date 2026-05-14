@@ -10,12 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.widget.NestedScrollView;
 import com.google.android.material.button.MaterialButton;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -81,7 +78,7 @@ public class CatererDashboardActivity extends AppCompatActivity {
         cardSales = findViewById(R.id.cardSales);
         cardRating = findViewById(R.id.cardRating);
 
-        // New Orders Section - Individual views (not RecyclerView)
+        // New Orders Section
         tvOrderId = findViewById(R.id.tvOrderId);
         tvCustomerName = findViewById(R.id.tvCustomerName);
         tvItemCount = findViewById(R.id.tvItemCount);
@@ -139,12 +136,10 @@ public class CatererDashboardActivity extends AppCompatActivity {
             greeting = "Good Evening";
         }
 
-        String ownerName = sharedPreferences.getString("current_user_name", "Owner");
         tvGreeting.setText(greeting + ",");
     }
 
     private void loadRealData() {
-        // Load data from SharedPreferences
         int todayOrders = sharedPreferences.getInt("today_orders", 12);
         float todaySales = sharedPreferences.getFloat("today_sales", 8500f);
         float avgRating = sharedPreferences.getFloat("avg_rating", 4.8f);
@@ -153,7 +148,6 @@ public class CatererDashboardActivity extends AppCompatActivity {
         tvTodaySales.setText("₹" + formatNumber(todaySales));
         tvTodayRating.setText(String.format(Locale.US, "%.1f", avgRating));
 
-        // Load low stock items
         loadLowStockAlert();
     }
 
@@ -188,7 +182,6 @@ public class CatererDashboardActivity extends AppCompatActivity {
                 items.add(part.trim());
             }
         } else {
-            // Sample data for demo
             items.add("Biryani (only 3 left)");
             items.add("Paneer Tikka (2 left)");
         }
@@ -196,15 +189,12 @@ public class CatererDashboardActivity extends AppCompatActivity {
     }
 
     private void loadWeeklyChart() {
-        // Get REAL weekly earnings data from SharedPreferences
         int[] weeklyData = getRealWeeklyData();
-
         int maxValue = getMaxValue(weeklyData);
-        if (maxValue == 0) maxValue = 10000; // Default if no data
+        if (maxValue == 0) maxValue = 10000;
 
         llChartBars.removeAllViews();
 
-        // Get colors
         int barColor = getColor(R.color.primary);
         int lowBarColor = getColor(R.color.primary_light);
 
@@ -214,7 +204,6 @@ public class CatererDashboardActivity extends AppCompatActivity {
             barContainer.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1));
             barContainer.setGravity(android.view.Gravity.BOTTOM);
 
-            // Calculate bar height based on REAL value
             int height = (int) ((weeklyData[i] * 150.0) / maxValue);
             if (height < 15) height = 15;
 
@@ -223,18 +212,15 @@ public class CatererDashboardActivity extends AppCompatActivity {
             barParams.bottomMargin = dpToPx(8);
             bar.setLayoutParams(barParams);
 
-            // Different color for highest value
             if (weeklyData[i] == getMaxValue(weeklyData) && weeklyData[i] > 0) {
                 bar.setBackgroundColor(barColor);
             } else {
                 bar.setBackgroundColor(lowBarColor);
             }
 
-            // Animation
             bar.setScaleY(0);
             bar.animate().scaleY(1).setDuration(500).setStartDelay(i * 100);
 
-            // Add value text on top of bar (optional)
             TextView valueText = new TextView(this);
             valueText.setText(formatPrice(weeklyData[i]));
             valueText.setTextSize(9);
@@ -247,12 +233,8 @@ public class CatererDashboardActivity extends AppCompatActivity {
         }
     }
 
-    // Get REAL weekly data from SharedPreferences
     private int[] getRealWeeklyData() {
         int[] weeklyData = new int[7];
-
-        // Get saved earnings for each day
-        // Day order: Monday=0, Tuesday=1, ... Sunday=6
         weeklyData[0] = sharedPreferences.getInt("earnings_mon", 0);
         weeklyData[1] = sharedPreferences.getInt("earnings_tue", 0);
         weeklyData[2] = sharedPreferences.getInt("earnings_wed", 0);
@@ -261,7 +243,6 @@ public class CatererDashboardActivity extends AppCompatActivity {
         weeklyData[5] = sharedPreferences.getInt("earnings_sat", 0);
         weeklyData[6] = sharedPreferences.getInt("earnings_sun", 0);
 
-        // If all are zero, load sample data for demo
         boolean allZero = true;
         for (int val : weeklyData) {
             if (val > 0) {
@@ -271,31 +252,25 @@ public class CatererDashboardActivity extends AppCompatActivity {
         }
 
         if (allZero) {
-            // Sample data for first time users
-            weeklyData[0] = 1200;  // Monday
-            weeklyData[1] = 3400;  // Tuesday
-            weeklyData[2] = 2800;  // Wednesday
-            weeklyData[3] = 4500;  // Thursday
-            weeklyData[4] = 6200;  // Friday
-            weeklyData[5] = 8900;  // Saturday
-            weeklyData[6] = 5400;  // Sunday
+            weeklyData[0] = 1200;
+            weeklyData[1] = 3400;
+            weeklyData[2] = 2800;
+            weeklyData[3] = 4500;
+            weeklyData[4] = 6200;
+            weeklyData[5] = 8900;
+            weeklyData[6] = 5400;
         }
-
         return weeklyData;
     }
 
-    // Get maximum value from array
     private int getMaxValue(int[] array) {
         int max = 0;
         for (int value : array) {
-            if (value > max) {
-                max = value;
-            }
+            if (value > max) max = value;
         }
         return max;
     }
 
-    // Format price for display
     private String formatPrice(int price) {
         if (price >= 1000) {
             return "₹" + (price / 1000) + "K";
@@ -318,15 +293,13 @@ public class CatererDashboardActivity extends AppCompatActivity {
         cardOrders.setOnClickListener(v ->
                 navigateToOrders());
         cardSales.setOnClickListener(v ->
-                navigateToEarnings());  // Changed to open Earnings page
+                navigateToEarnings());
         cardRating.setOnClickListener(v ->
                 Toast.makeText(this, "Rating Details", Toast.LENGTH_SHORT).show());
 
         // New Orders buttons
         btnAccept.setOnClickListener(v -> {
             Toast.makeText(this, "Order Accepted", Toast.LENGTH_SHORT).show();
-            // Hide the order card after accept
-            findViewById(R.id.llLowStockAlert).requestLayout();
         });
 
         btnDecline.setOnClickListener(v -> {
@@ -336,9 +309,8 @@ public class CatererDashboardActivity extends AppCompatActivity {
         tvSeeAll.setOnClickListener(v ->
                 navigateToOrders());
 
-        // Reports link
         tvReports.setOnClickListener(v ->
-                navigateToEarnings());  // Changed to open Earnings page
+                navigateToEarnings());
 
         // Quick Actions
         btnAddItem.setOnClickListener(v ->
@@ -346,10 +318,13 @@ public class CatererDashboardActivity extends AppCompatActivity {
         btnAllOrders.setOnClickListener(v ->
                 navigateToOrders());
 
-        // Bottom Navigation
+        // ========== BOTTOM NAVIGATION CLICK LISTENERS ==========
         btnNavDashboard.setOnClickListener(v -> {
             setActiveNav(0);
-            // Already on dashboard
+            // Already on dashboard, just refresh
+            loadRealData();
+            loadWeeklyChart();
+            Toast.makeText(this, "Dashboard", Toast.LENGTH_SHORT).show();
         });
 
         btnNavMenu.setOnClickListener(v -> {
@@ -364,25 +339,41 @@ public class CatererDashboardActivity extends AppCompatActivity {
 
         btnNavEarnings.setOnClickListener(v -> {
             setActiveNav(3);
-            navigateToEarnings();  // Added navigation to Earnings page
+            navigateToEarnings();
         });
 
         btnNavProfile.setOnClickListener(v -> {
             setActiveNav(4);
             navigateToProfile();
         });
+        // =======================================================
     }
 
-    // ========== ADD THIS MISSING METHOD ==========
+    private void navigateToMenuManagement() {
+        Intent intent = new Intent(this, MenuManagementActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private void navigateToOrders() {
+        Intent intent = new Intent(this, OwnerOrdersActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
     private void navigateToEarnings() {
         Intent intent = new Intent(this, EarningsActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
-    // ============================================
+
+    private void navigateToProfile() {
+        Intent intent = new Intent(this, CatererProfileActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 
     private void setActiveNav(int position) {
-        // Reset all to gray
         resetNavIcons();
 
         int primaryColor = getColor(R.color.primary);
@@ -426,23 +417,5 @@ public class CatererDashboardActivity extends AppCompatActivity {
         tvNavOrders.setTextColor(gray);
         tvNavEarnings.setTextColor(gray);
         tvNavProfile.setTextColor(gray);
-    }
-
-    private void navigateToMenuManagement() {
-        Intent intent = new Intent(this, MenuManagementActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    private void navigateToOrders() {
-        Intent intent = new Intent(this, OwnerOrdersActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    private void navigateToProfile() {
-        Intent intent = new Intent(this, CatererProfileActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

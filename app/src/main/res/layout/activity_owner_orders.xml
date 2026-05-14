@@ -86,5 +86,9 @@
             android:layout_marginTop="16dp" />
 
     </LinearLayout>
+    <!-- Bottom Navigation -->
+    <include
+        android:id="@+id/bottomNavigation"
+        layout="@layout/layout_bottom_navigation" />
 
 </LinearLayout>
