@@ -84,7 +84,9 @@ public class EarningsActivity extends AppCompatActivity {
         });
 
         btnNavMenu.setOnClickListener(v -> {
-            Toast.makeText(this, "Menu", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MenuManagementActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         btnNavOrders.setOnClickListener(v -> {

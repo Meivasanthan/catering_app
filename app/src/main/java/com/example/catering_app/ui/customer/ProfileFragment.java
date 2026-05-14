@@ -120,12 +120,11 @@ public class ProfileFragment extends Fragment {
         if (!imagePath.isEmpty()) {
             File imgFile = new File(imagePath);
             if (imgFile.exists()) {
-                // FIXED: Better image loading with center crop
                 Glide.with(this)
                         .load(imgFile)
                         .apply(new RequestOptions()
-                                .centerCrop()  // This ensures image fills circle properly
-                                .circleCrop()   // This makes it circular
+                                .centerCrop()
+                                .circleCrop()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .placeholder(R.drawable.profile_photo_avr)
                                 .error(R.drawable.profile_photo_avr))
@@ -135,12 +134,11 @@ public class ProfileFragment extends Fragment {
     }
 
     private void loadProfileImage(Uri imageUri) {
-        // FIXED: Better image loading with center crop
         Glide.with(this)
                 .load(imageUri)
                 .apply(new RequestOptions()
-                        .centerCrop()  // This ensures image fills circle properly
-                        .circleCrop()   // This makes it circular
+                        .centerCrop()
+                        .circleCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(profileImage);
     }
@@ -150,7 +148,6 @@ public class ProfileFragment extends Fragment {
             InputStream inputStream = getActivity().getContentResolver().openInputStream(imageUri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
-            // Optional: Resize bitmap to avoid too large files
             Bitmap resizedBitmap = resizeBitmap(bitmap, 500, 500);
 
             String fileName = "profile_" + System.currentTimeMillis() + ".jpg";
@@ -172,7 +169,6 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    // Helper method to resize bitmap
     private Bitmap resizeBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
@@ -255,13 +251,17 @@ public class ProfileFragment extends Fragment {
         menuLogout.setOnClickListener(v -> showLogoutDialog());
     }
 
+    // ========== FIXED LOGOUT METHOD ==========
     private void showLogoutDialog() {
         new AlertDialog.Builder(getContext())
                 .setTitle("Sign Out")
                 .setMessage("Are you sure you want to sign out?")
                 .setPositiveButton("Yes", (dialog, which) -> {
+                    // FIXED: ONLY change login status, DO NOT clear all data
                     SharedPreferences prefs = getActivity().getSharedPreferences("USER_DATA", MODE_PRIVATE);
-                    prefs.edit().clear().apply();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("is_logged_in", false);  // Only change login status
+                    editor.apply();  // Apply changes without deleting data
 
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -271,4 +271,5 @@ public class ProfileFragment extends Fragment {
                 .setNegativeButton("No", null)
                 .show();
     }
+    // ========================================
 }

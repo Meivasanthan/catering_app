@@ -75,8 +75,9 @@ public class MenuManagementActivity extends AppCompatActivity {
         });
 
         btnNavMenu.setOnClickListener(v -> {
-            // Already on Menu page, do nothing or refresh
-            Toast.makeText(this, "Menu", Toast.LENGTH_SHORT).show();
+            // Already on Menu page, just refresh or show message
+            loadFoodItemsFromStorage();  // Refresh the list
+            Toast.makeText(this, "Menu refreshed", Toast.LENGTH_SHORT).show();
         });
 
         btnNavOrders.setOnClickListener(v -> {
