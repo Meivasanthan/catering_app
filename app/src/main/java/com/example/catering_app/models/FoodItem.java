@@ -1,13 +1,16 @@
 package com.example.catering_app.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FoodItem {
     private String id;
     private String name;
     private String description;
     private double price;
     private double offerPrice;
-    private String type;
-    private String category;
+    private String type;  // "Veg" or "NonVeg"
+    private String category;  // "Main Course", "Dessert", etc.
     private boolean isAvailable;
     private int ordersCount;
     private boolean isPopular;
@@ -15,15 +18,17 @@ public class FoodItem {
     private int prepTime;
     private String imagePath;
     private String catererId;
+    private List<String> eventTypes;  // NEW: ["Birthday", "Wedding", "Corporate", "Party", "House Party"]
 
     public FoodItem() {
-        // Default constructor for Gson
+        this.eventTypes = new ArrayList<>();
     }
 
     public FoodItem(String id, String name, String description, double price,
                     double offerPrice, String type, String category,
                     boolean isAvailable, int ordersCount, boolean isPopular,
-                    boolean isBestSeller, int prepTime, String imagePath) {
+                    boolean isBestSeller, int prepTime, String imagePath,
+                    List<String> eventTypes) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -37,6 +42,7 @@ public class FoodItem {
         this.isBestSeller = isBestSeller;
         this.prepTime = prepTime;
         this.imagePath = imagePath;
+        this.eventTypes = eventTypes != null ? eventTypes : new ArrayList<>();
     }
 
     // Getters
@@ -54,6 +60,8 @@ public class FoodItem {
     public int getPrepTime() { return prepTime; }
     public String getImagePath() { return imagePath; }
     public String getCatererId() { return catererId; }
+    public List<String> getEventTypes() { return eventTypes; }
+
     public String getDisplayPrice() {
         if (offerPrice > 0 && offerPrice < price) {
             return "₹" + (int) offerPrice;
@@ -76,4 +84,10 @@ public class FoodItem {
     public void setPrepTime(int prepTime) { this.prepTime = prepTime; }
     public void setImagePath(String imagePath) { this.imagePath = imagePath; }
     public void setCatererId(String catererId) { this.catererId = catererId; }
+    public void setEventTypes(List<String> eventTypes) { this.eventTypes = eventTypes; }
+
+    // Helper method to check if food is suitable for an event
+    public boolean isSuitableForEvent(String eventType) {
+        return eventTypes != null && eventTypes.contains(eventType);
+    }
 }

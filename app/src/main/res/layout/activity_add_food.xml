@@ -230,6 +230,92 @@
 
             </com.google.android.material.chip.ChipGroup>
 
+            <!-- ========== EVENT TYPES SECTION (NEW - LIKE ZOMATO) ========== -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📅 Suitable For Events"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#2C3E50"
+                android:layout_marginBottom="12dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select which events this dish is suitable for"
+                        android:textSize="12sp"
+                        android:textColor="#7F8C8D"
+                        android:layout_marginBottom="12dp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupEvents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:selectionRequired="false"
+                        app:singleSelection="false"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipBirthday"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🎂 Birthday"
+                            android:checked="false" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipWedding"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="💍 Wedding"
+                            android:checked="false" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipCorporate"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="💼 Corporate"
+                            android:checked="false" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipParty"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🎉 Party"
+                            android:checked="false" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipHouseParty"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🏠 House Party"
+                            android:checked="false" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <!-- ============================================================ -->
+
             <!-- Preparation Time -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilPrepTime"
@@ -247,7 +333,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Switches -->
+            <!-- Switches Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -261,6 +347,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
+                    <!-- Available Today -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -271,7 +358,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Available Today"
+                            android:text="🟢 Available Today"
                             android:textSize="14sp"
                             android:textColor="#2C3E50" />
 
@@ -289,6 +376,7 @@
                         android:background="#F0F0F0"
                         android:layout_marginVertical="8dp" />
 
+                    <!-- Popular Item -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -299,7 +387,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Popular Item"
+                            android:text="⭐ Popular Item"
                             android:textSize="14sp"
                             android:textColor="#2C3E50" />
 
@@ -316,6 +404,7 @@
                         android:background="#F0F0F0"
                         android:layout_marginVertical="8dp" />
 
+                    <!-- Best Seller -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -326,7 +415,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Best Seller"
+                            android:text="🔥 Best Seller"
                             android:textSize="14sp"
                             android:textColor="#2C3E50" />
 

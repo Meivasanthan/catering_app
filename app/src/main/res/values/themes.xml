@@ -14,14 +14,17 @@
         <item name="colorOnSecondary">@android:color/white</item>
 
         <!-- Background -->
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@color/background</item>
 
         <!-- Status bar color -->
         <item name="android:statusBarColor">#E67E22</item>
         <item name="android:windowLightStatusBar">false</item>
 
-        <!-- Font (optional - remove if no Poppins) -->
+        <!-- Font -->
         <item name="android:fontFamily">sans-serif</item>
+
+        <!-- Card and Surface colors -->
+        <item name="cardViewStyle">@style/CardView.Light</item>
     </style>
 
     <!-- Splash Screen Theme -->
@@ -29,6 +32,19 @@
         <item name="android:windowBackground">@color/orange</item>
         <item name="android:statusBarColor">@color/orange</item>
         <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- CardView Styles -->
+    <style name="CardView.Light" parent="Base.CardView">
+        <item name="cardBackgroundColor">@android:color/white</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="CardView.Dark" parent="Base.CardView">
+        <item name="cardBackgroundColor">#1E1E1E</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
     </style>
 
 </resources>

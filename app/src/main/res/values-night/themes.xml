@@ -3,7 +3,7 @@
 
     <!-- Base Application Theme for Night Mode -->
     <style name="Theme.CateringApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color -->
+        <!-- Primary brand color (same for brand consistency) -->
         <item name="colorPrimary">#E67E22</item>
         <item name="colorPrimaryVariant">#D35400</item>
         <item name="colorOnPrimary">@android:color/white</item>
@@ -13,12 +13,22 @@
         <item name="colorSecondaryVariant">#1A252F</item>
         <item name="colorOnSecondary">@android:color/white</item>
 
-        <!-- Background -->
+        <!-- Background (Dark) -->
         <item name="android:windowBackground">#121212</item>
 
         <!-- Status bar color -->
         <item name="android:statusBarColor">#E67E22</item>
         <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Card and Surface colors for Dark Mode -->
+        <item name="cardViewStyle">@style/CardView.Dark</item>
+    </style>
+
+    <!-- CardView Dark Style -->
+    <style name="CardView.Dark" parent="Base.CardView">
+        <item name="cardBackgroundColor">#1E1E1E</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
     </style>
 
 </resources>

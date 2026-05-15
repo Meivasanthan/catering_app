@@ -16,8 +16,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationManagerCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -73,16 +75,15 @@ public class CatererProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caterer_profile);
+
         // Initialize Bottom Navigation
         View bottomNav = findViewById(R.id.bottomNavigation);
-
         LinearLayout btnNavDashboard = bottomNav.findViewById(R.id.btnNavDashboard);
         LinearLayout btnNavMenu = bottomNav.findViewById(R.id.btnNavMenu);
         LinearLayout btnNavOrders = bottomNav.findViewById(R.id.btnNavOrders);
         LinearLayout btnNavEarnings = bottomNav.findViewById(R.id.btnNavEarnings);
         LinearLayout btnNavProfile = bottomNav.findViewById(R.id.btnNavProfile);
 
-// Set click listeners
         btnNavDashboard.setOnClickListener(v -> {
             Intent intent = new Intent(this, CatererDashboardActivity.class);
             startActivity(intent);
@@ -108,9 +109,8 @@ public class CatererProfileActivity extends AppCompatActivity {
         });
 
         btnNavProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CatererProfileActivity.class);
-            startActivity(intent);
-            finish();
+            // Already on profile
+            Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
         });
 
         sharedPreferences = getSharedPreferences("USER_DATA", MODE_PRIVATE);
@@ -122,6 +122,7 @@ public class CatererProfileActivity extends AppCompatActivity {
         loadBusinessData();
         setupClickListeners();
         setupSwitches();
+        applyDarkMode();
     }
 
     private void initViews() {
@@ -291,32 +292,92 @@ public class CatererProfileActivity extends AppCompatActivity {
         tvBusinessStatus.setTextColor(statusColor);
     }
 
+    // ========== SETTINGS WITH ACTUAL FUNCTIONALITY ==========
     private void setupSwitches() {
-        switchNotifications.setChecked(sharedPreferences.getBoolean("notifications_enabled", true));
-        switchDarkMode.setChecked(sharedPreferences.getBoolean("dark_mode", false));
-        switchAutoAccept.setChecked(sharedPreferences.getBoolean("auto_accept", false));
-        switchLiveLocation.setChecked(sharedPreferences.getBoolean("live_location", true));
+        // Load saved preferences
+        boolean notificationsEnabled = sharedPreferences.getBoolean("notifications_enabled", true);
+        boolean darkModeEnabled = sharedPreferences.getBoolean("dark_mode", false);
+        boolean autoAcceptEnabled = sharedPreferences.getBoolean("auto_accept", false);
+        boolean liveLocationEnabled = sharedPreferences.getBoolean("live_location", true);
 
+        switchNotifications.setChecked(notificationsEnabled);
+        switchDarkMode.setChecked(darkModeEnabled);
+        switchAutoAccept.setChecked(autoAcceptEnabled);
+        switchLiveLocation.setChecked(liveLocationEnabled);
+
+        // Notification Switch - Enable/Disable Push Notifications
         switchNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharedPreferences.edit().putBoolean("notifications_enabled", isChecked).apply();
-            Toast.makeText(this, isChecked ? "Notifications enabled" : "Notifications disabled", Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("notifications_enabled", isChecked);
+            editor.apply();
+
+            if (isChecked) {
+                // Enable notifications
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                boolean areNotificationsEnabled = notificationManager.areNotificationsEnabled();
+                if (!areNotificationsEnabled) {
+                    Toast.makeText(this, "Please enable notifications in app settings", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Notifications enabled", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Notifications disabled", Toast.LENGTH_SHORT).show();
+            }
         });
 
+        // Dark Mode Switch
         switchDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply();
-            Toast.makeText(this, "Dark mode will apply on restart", Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("dark_mode", isChecked);
+            editor.apply();
+
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                Toast.makeText(this, "Dark mode enabled. Restart app for full effect.", Toast.LENGTH_LONG).show();
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                Toast.makeText(this, "Light mode enabled. Restart app for full effect.", Toast.LENGTH_LONG).show();
+            }
         });
 
+        // Auto Accept Orders Switch
         switchAutoAccept.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharedPreferences.edit().putBoolean("auto_accept", isChecked).apply();
-            Toast.makeText(this, isChecked ? "Auto accept enabled" : "Auto accept disabled", Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("auto_accept", isChecked);
+            editor.apply();
+
+            if (isChecked) {
+                Toast.makeText(this, "Auto accept enabled. New orders will be accepted automatically.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Auto accept disabled. You need to manually accept orders.", Toast.LENGTH_LONG).show();
+            }
         });
 
+        // Live Location Switch
         switchLiveLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharedPreferences.edit().putBoolean("live_location", isChecked).apply();
-            Toast.makeText(this, isChecked ? "Location sharing enabled" : "Location sharing disabled", Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("live_location", isChecked);
+            editor.apply();
+
+            if (isChecked) {
+                Toast.makeText(this, "Live location sharing enabled", Toast.LENGTH_SHORT).show();
+                // Here you would start location tracking service
+            } else {
+                Toast.makeText(this, "Live location sharing disabled", Toast.LENGTH_SHORT).show();
+                // Here you would stop location tracking service
+            }
         });
     }
+
+    private void applyDarkMode() {
+        boolean darkMode = sharedPreferences.getBoolean("dark_mode", false);
+        if (darkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+    // =======================================================
 
     private void setupClickListeners() {
         // Edit Profile
@@ -331,15 +392,14 @@ public class CatererProfileActivity extends AppCompatActivity {
             showEditHoursDialog();
         });
 
-        // Edit Business Information (click on info section)
+        // Edit Business Information
         findViewById(R.id.cardBusinessInfo).setOnClickListener(v -> showEditProfileDialog());
 
-        // ========== EDIT ACCOUNT (ADD THIS) ==========
+        // Edit Account
         tvEditAccount.setOnClickListener(v -> {
             v.startAnimation(bounceAnimation);
             showEditAccountDialog();
         });
-        // ============================================
 
         // Stats card clicks
         cardStatsOrders.setOnClickListener(v -> {
@@ -483,7 +543,7 @@ public class CatererProfileActivity extends AppCompatActivity {
                 .show();
     }
 
-    // ========== EDIT ACCOUNT DIALOG (ADD THIS METHOD) ==========
+    // ========== EDIT ACCOUNT DIALOG ==========
     private void showEditAccountDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_account, null);
@@ -494,7 +554,6 @@ public class CatererProfileActivity extends AppCompatActivity {
         TextInputEditText etPassword = dialogView.findViewById(R.id.etAccountPassword);
         TextInputEditText etConfirmPassword = dialogView.findViewById(R.id.etConfirmPassword);
 
-        // Load current values
         etName.setText(tvAccountName.getText().toString());
         etEmail.setText(tvAccountEmail.getText().toString());
         etPhone.setText(tvAccountPhone.getText().toString());
@@ -508,7 +567,6 @@ public class CatererProfileActivity extends AppCompatActivity {
                     String newPassword = etPassword.getText().toString().trim();
                     String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-                    // Validation
                     if (newName.isEmpty()) {
                         Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
                         return;
@@ -522,7 +580,6 @@ public class CatererProfileActivity extends AppCompatActivity {
                         return;
                     }
 
-                    // Check if password is being changed
                     if (!newPassword.isEmpty()) {
                         if (!newPassword.equals(confirmPassword)) {
                             Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
@@ -534,20 +591,17 @@ public class CatererProfileActivity extends AppCompatActivity {
                         }
                     }
 
-                    // Save to SharedPreferences
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("current_user_name", newName);
                     editor.putString("current_user_email", newEmail);
                     editor.putString("current_user_phone", newPhone);
 
-                    // Update password if changed
                     if (!newPassword.isEmpty()) {
                         editor.putString("current_user_password", newPassword);
                         updateUserPasswordInList(newEmail, newPassword);
                     }
                     editor.apply();
 
-                    // Update UI
                     tvAccountName.setText(newName);
                     tvAccountEmail.setText(newEmail);
                     tvAccountPhone.setText(newPhone);
@@ -562,7 +616,6 @@ public class CatererProfileActivity extends AppCompatActivity {
                 .show();
     }
 
-    // Helper method to update password in users_list
     private void updateUserPasswordInList(String email, String newPassword) {
         String usersJson = sharedPreferences.getString("users_list", "");
         if (!usersJson.isEmpty()) {
@@ -581,7 +634,6 @@ public class CatererProfileActivity extends AppCompatActivity {
             sharedPreferences.edit().putString("users_list", updatedJson).apply();
         }
     }
-    // ==========================================================
 
     // ========== SUPPORT DIALOGS ==========
     private void showHelpCenterDialog() {
